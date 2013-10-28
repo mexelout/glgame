@@ -32,6 +32,9 @@ void init() {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_ALPHA_TEST);//アルファテスト開始
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glCullFace(GL_BACK);
 	Input::init();
 }
@@ -51,7 +54,7 @@ void resize(int width, int height) {
 int main(int argc, char *argv[]) {
 	// メモリーリーク検知
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(139);
+//	_CrtSetBreakAlloc(1960);
 	glutInit(&argc, argv);
 	glutInitWindowPosition(100, 100);
 	const POINT* s = Config::GetWindowSize();

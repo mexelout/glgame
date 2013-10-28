@@ -5,33 +5,27 @@
 #include "Input.h"
 #include "Config.h"
 #include "Graphics.h"
+#include "ExitButton.h"
 
 Frame::Frame() : Object2D("frame") {
-	size.set(400, 400);
+	size.set(400, 300);
 }
 
 Frame::~Frame() {
 }
 
 Frame* Frame::init() {
+	position.set(-300, 125);
+	childs.push_back((new ExitButton())->init());
 	return this;
 }
 
 void Frame::update() {
-
-	if(Input::getKeyState(GLUT_KEY_LEFT, Input::STATE_PRESS)) {
-		position.x--;
+	ExitButton* exit_button = (ExitButton*)(childs[0]);
+	exit_button->setOffset(&position);
+	for each(Button* child in childs) {
+		child->update();
 	}
-	if(Input::getKeyState(GLUT_KEY_RIGHT, Input::STATE_PRESS)) {
-		position.x++;
-	}
-	if(Input::getKeyState(GLUT_KEY_UP, Input::STATE_PRESS)) {
-		position.y++;
-	}
-	if(Input::getKeyState(GLUT_KEY_DOWN, Input::STATE_PRESS)) {
-		position.y--;
-	}
-
 }
 
 void Frame::draw() {
@@ -51,21 +45,26 @@ void Frame::draw() {
 			float add = (size.height - state.y) * 0.2f;
 			state.y += add;
 		}
-		if(state.y > size.height) {
-			state.y = size.height;
+		if(state.y > size.height-1) {
+			ExitButton* exit_button = (ExitButton*)(childs[0]);
+			exit_button->fadeIn();
 		}
 	} else {
-		if(state.y > 0) {
-			state.y *= 0.8f;
-		}
-		const POINT* ws = Config::GetWindowSize();
-		if(state.y < 1) {
-			state.y = 0;
-			float add = ((ws->x + size.width) - state.x) * 0.1f;
-			state.x += add;
-		}
-		if(state.x > (ws->x + size.width)) {
-			state.x = (ws->x + size.width);
+		ExitButton* exit_button = (ExitButton*)(childs[0]);
+		exit_button->fadeOut();
+		if(exit_button->getAlpha() == 0) {
+			if(state.y > 0) {
+				state.y *= 0.8f;
+			}
+			const POINT* ws = Config::GetWindowSize();
+			if(state.y < 1) {
+				state.y = 0;
+				float add = ((ws->x + size.width) - state.x) * 0.1f;
+				state.x += add;
+			}
+			if(state.x > (ws->x + size.width)) {
+				state.x = (ws->x + size.width);
+			}
 		}
 	}
 
@@ -76,9 +75,16 @@ void Frame::draw() {
 	glColor3f(0, 0, 0);
 	Graphics::getInst()->drawRect(dp, ds+SIZE2D(2, 2), true);
 
+	for each(Button* child in childs) {
+		child->draw();
+	}
+	glLoadIdentity();
 }
 
 void Frame::release() {
-
+	for each(Object2D* child in childs) {
+		child->release();
+	}
+	childs.clear();
 	Object2D::release();
 }

@@ -5,48 +5,55 @@
 #include "Common.h"
 
 Responder::Responder(std::string tag) : base(tag) {
-	isIn = false;
+	is_in = false;
+	selected = false;
+	mouseIn = null;
+	mouseDown = null;
+	mouseUp = null;
+	mouseOut = null;
 }
 Responder::~Responder() {
 }
 Responder* Responder::init() {
+	base::init();
 	size.set(100, 50);
 	return this;
 }
 void Responder::update() {
 	const VECTOR2& mp = *Input::getMousePoint();
-	const Input::MOUSESTATE ms_t = Input::getMouseState(Input::STATE_TRIGGER);
-	const Input::MOUSESTATE ms_r = Input::getMouseState(Input::STATE_RELEASE);
 	const SIZE2D hs = size / 2;
 	// mouse in
 	if(boundBox(VECTOR2(pos.x - hs.width, pos.y + hs.height), VECTOR2(pos.x + hs.width, pos.y - hs.height), mp)) {
-		if(!isIn) {
-			isIn = true;
-			mouseIn();
+		const Input::MOUSESTATE ms_p = Input::getMouseState(Input::STATE_PRESS);
+		const Input::MOUSESTATE ms_t = Input::getMouseState(Input::STATE_TRIGGER);
+		const Input::MOUSESTATE ms_r = Input::getMouseState(Input::STATE_RELEASE);
+		if(!is_in) {
+			is_in = true;
+			if(mouseIn) mouseIn->execute();
 		}
-		if(ms_t._left) mouseDown();
-		if(ms_r._left) mouseUp();
+		if(ms_p._left) {
+			selected = true;
+		}
+		if(ms_t._left) {
+			if(mouseDown) mouseDown->execute();
+		}
+		if(ms_r._left) {
+			if(mouseUp) mouseUp->execute();
+		}
 	} else {
-		if(isIn) {
-			isIn = false;
-			mouseOut();
+		if(is_in) {
+			is_in = false;
+			selected = false;
+			if(mouseOut) mouseOut->execute();
 		}
 	}
 }
 void Responder::draw() {
-	glColor3f(1, 1, 1);
-	Graphics::getInst()->drawRect(pos, size);
-	glColor3f(0, 0, 0);
-	Graphics::getInst()->drawRect(pos, size+SIZE2D(2, 2), true);
 }
 void Responder::release() {
+	SAFE_RELEASE(mouseIn);
+	SAFE_RELEASE(mouseDown);
+	SAFE_RELEASE(mouseUp);
+	SAFE_RELEASE(mouseOut);
 	base::release();
-}
-void Responder::mouseDown() {
-}
-void Responder::mouseUp() {
-}
-void Responder::mouseIn() {
-}
-void Responder::mouseOut() {
 }

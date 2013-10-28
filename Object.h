@@ -12,8 +12,11 @@ public:
 	virtual void release(){delete this;}
 	bool tagEqual(const std::string tag){return (this->tag == tag);}
 	unsigned int getDimension() {return dimension;}
+	static void close(){end = true;}
 protected:
 	unsigned int dimension;
+	static bool end; // I—¹—p true‚É‚·‚é‚ÆI—¹‚·‚é
 private:
 	std::string tag;
 };
+

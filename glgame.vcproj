@@ -171,18 +171,34 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\ExitButton.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Grid.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Model.cpp"
 				>
 			</File>
 			<Filter
 				Name="basis"
 				>
 				<File
+					RelativePath=".\Button.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Central.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Frame.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Image.cpp"
 					>
 				</File>
 				<File
@@ -269,18 +285,38 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\ExitButton.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Grid.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Model.h"
 				>
 			</File>
 			<Filter
 				Name="basis"
 				>
 				<File
+					RelativePath=".\Button.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Central.h"
 					>
 				</File>
 				<File
+					RelativePath=".\Command.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Frame.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Image.h"
 					>
 				</File>
 				<File

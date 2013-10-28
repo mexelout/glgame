@@ -7,7 +7,8 @@
 #include "Grid.h"
 #include "Font.h"
 #include "Frame.h"
-#include "Responder.h"
+#include "ExitButton.h"
+#include "Model.h"
 
 Scene::Scene(void) {
 	fade = 0;
@@ -39,13 +40,20 @@ void Scene::init() {
 	central = Central::getInst();
 	fade->fadeIn();
 	Camera* camera = (new Camera)->init();
+	Camera::LockAtUp lock_at_up;
+	lock_at_up.eye.set(4, 3, 4);
+	lock_at_up.at.set(0, 1, 0);
+	lock_at_up.up.set(0, 1, 0);
+	camera->setLockAtUp(&lock_at_up);
 	camera->setKind(CAMERAKIND_INTERPOLATION);
 
 	central->addObject(camera);
 	central->addObject((new Grid())->init());
 
 	central->addObject((new Frame())->init());
-	central->addObject((new Responder())->init());
+	Model* mdl = (new Model("model"))->init();
+	mdl->load("model/heisi.x");
+	central->addObject(mdl);
 
 	phase = 1;
 }
@@ -58,19 +66,19 @@ void Scene::update() {
 		const int wheel = Input::getWheel();
 		if(mouse_state._left) {
 			camera->rotateXEyePivot(drag_point->x / 90.f);
-			camera->rotateYEyePivot(drag_point->y / -90.f);
+			camera->rotateYEyePivot(drag_point->y / 90.f);
 		} else if(mouse_state._right) {
 			camera->rotateXAtPivot(drag_point->x / 90.f);
-			camera->rotateYAtPivot(drag_point->y / -90.f);
+			camera->rotateYAtPivot(drag_point->y / 90.f);
 		}
 		camera->changeRelativeLength((float)wheel);
 	}
 
 	if(fade) fade->update();
 	const Input::MOUSESTATE ms = Input::getMouseState(Input::STATE_RELEASE);
-	if(ms._left) {
-//		if(fade) fade->fadeOut();
-	}
+	//if(ms._left) {
+	//	if(fade) fade->fadeOut();
+	//}
 	if(fade->getState() == Fade::FADESTATE_OUT_END) {
 		phase = 2;
 	}

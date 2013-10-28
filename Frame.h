@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include "Object2D.h"
 #include "Vector.h"
 #include "Size.h"
@@ -15,4 +16,5 @@ public:
 private:
 	VECTOR2 position;
 	SIZE2D size;
+	std::vector<Object2D*> childs;
 };

@@ -36,6 +36,12 @@ protected:
 	 */
 	virtual void uninit();
 
+	/**
+	 * フェード開始
+	 * @param next_scene 次のシーン
+	 */
+	void fadeIn(Scene* next_scene);
+
 private:
 	/// centralクラスを保存しておく(いちいちゲットするコストは無駄と判断)
 	Central* central;

@@ -10,6 +10,9 @@
 
 Central* Central::inst = null;
 
+// object.cppが無い為ここで定義
+bool Object::end = false;
+
 Central::Central(void) : Object("central") {
 	scene = null;
 }
@@ -23,7 +26,7 @@ Central* Central::getInst() {
 }
 
 Central* Central::init() {
-	GLFONT::init();
+	Font::init();
 	scene = new Scene;
 
 	return this;
@@ -81,12 +84,6 @@ void Central::draw() {
 	for each (Object* obj in objects[0]) {
 		obj->draw();
 	}
-	GLUquadric* obj = gluNewQuadric();
-	gluQuadricDrawStyle(obj, GLU_FILL);
-	gluQuadricNormals(obj, GLU_SMOOTH); //シェーディング
-	gluQuadricTexture(obj,GLU_TRUE);//テクスチャ座標自動生成
-	gluSphere(obj,1,60,60);//描画
-	gluDeleteQuadric(obj);
 
 	glDisable(GL_LIGHTING);
 
@@ -96,11 +93,19 @@ void Central::draw() {
 	gluOrtho2D(-ws->x/2, ws->x/2, -ws->y/2, ws->y/2);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	glDisable(GL_DEPTH_TEST);
 
 	for each (Object* obj in objects[1]) {
 		obj->draw();
 	}
+
 	if(scene) scene->draw();
+
+	glEnable(GL_DEPTH_TEST);
+
+	if(end) {
+		glutExit();
+	}
 }
 
 void Central::release() {
@@ -108,7 +113,7 @@ void Central::release() {
 	if(scene) {delete scene; scene = null;}
 
 	Object::release();
-	GLFONT::release();
+	Font::release();
 
 	inst = null;
 }

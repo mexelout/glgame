@@ -71,10 +71,7 @@ void Fade::draw(void) {
 		glDisable(GL_LIGHTING);
 
 		if(tex_num) glBindTexture(GL_TEXTURE_2D, tex_num );
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		glEnable(GL_ALPHA_TEST);//アルファテスト開始
 		glEnable(GL_TEXTURE_2D);//テクスチャ有効
 
 		glColor4f(1, 1, 1, alpha);
@@ -101,7 +98,6 @@ void Fade::draw(void) {
 		glVertex2f(-512, -288);
 		glEnd();
 		glColor4f(1, 1, 1, 1);
-		glDisable(GL_BLEND);
 
 		glEnable(GL_LIGHTING);
 		glEnable(GL_DEPTH_TEST);

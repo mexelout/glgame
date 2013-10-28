@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 #include "Common.h"
 #include "Font.h"
 
-GLFONT* font = null;
+Font* font = null;
 
 //コンストラクタ　フォント作成
-GLFONT::GLFONT() {
+Font::Font() {
 	Hfont = CreateFontW(
 	32,					//フォント高さ
 	0,						//文字幅
@@ -28,26 +29,31 @@ GLFONT::GLFONT() {
 	SelectObject(Hdc, Hfont);
 }
 
-GLFONT::~GLFONT() {
+Font::~Font() {
 }
 
-void GLFONT::init() {
-	font = new GLFONT();
+void Font::init() {
+	font = new Font();
 }
 
 //ワイド文字列の描画
-void GLFONT::drawString(int x,int y,wchar_t *format, ...) {
+void Font::drawString(int x,int y, const char* format, ...) {
+	//ポインタがNULLの場合は終了
+	if(format == NULL) return;
+
 	wchar_t buf[256];
 	va_list ap;
 	int Length=0;
 	int list=0;
 
-	//ポインタがNULLの場合は終了
-	if(format == NULL) return;
+	// wchar_t化
+	size_t s_t;
+	wchar_t fmt_buf[256];
+	mbstowcs_s(&s_t, fmt_buf, 256, format, 128);
 
 	//文字列変換
-	va_start(ap, format);
-	vswprintf_s(buf, format, ap);
+	va_start(ap, fmt_buf);
+	vswprintf_s(buf, fmt_buf, ap);
 	va_end(ap);
 
 	Length = wcslen(buf);
@@ -67,9 +73,8 @@ void GLFONT::drawString(int x,int y,wchar_t *format, ...) {
 	glDeleteLists(list, Length);
 	list = 0;
 	Length = 0;
-	glEnable(GL_LIGHTING);
 }
 
-void GLFONT::release() {
+void Font::release() {
 	if(font) {delete font;font=null;}
 }
