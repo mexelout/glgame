@@ -1,21 +1,25 @@
 #pragma once
 
 #include <string>
+#include "Transform.h"
 
 class Object {
 public:
-	Object(const std::string tag){dimension=0; this->tag = tag;}
+	Object(const std::string tag);
 	virtual ~Object(){}
 	virtual Object* init()=0;
 	virtual void update()=0;
 	virtual void draw()=0;
-	virtual void release(){delete this;}
-	bool tagEqual(const std::string tag){return (this->tag == tag);}
-	unsigned int getDimension() {return dimension;}
-	static void close(){end = true;}
+	virtual void release();
+	bool tagEqual(const std::string tag);
+	unsigned int getDimension();
+	static void close();
+	const Transform* getTransform();
+	void setTransform(const Transform* transform);
 protected:
 	unsigned int dimension;
 	static bool end; // èIóπóp trueÇ…Ç∑ÇÈÇ∆èIóπÇ∑ÇÈ
+	Transform transform;
 private:
 	std::string tag;
 };

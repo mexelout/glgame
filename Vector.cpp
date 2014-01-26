@@ -65,6 +65,16 @@ void VECTOR3::set(float x, float y, float z) {
 	this->z = z;
 }
 
+VECTOR3 VECTOR3::Up() {
+	return VECTOR3(0, 1, 0);
+}
+VECTOR3 VECTOR3::Right() {
+	return VECTOR3(1, 0, 0);
+}
+VECTOR3 VECTOR3::Forward() {
+	return VECTOR3(0, 0, 1);
+}
+
 float Vector3Length(const LPVECTOR3 pVec) {
 	return sqrtf(Vector3LengthSq(pVec));
 }

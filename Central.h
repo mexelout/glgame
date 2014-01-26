@@ -11,6 +11,7 @@ class Central : public Object {
 private:
 	Central(void);
 	~Central(void);
+	Central* operator = (Central*){}
 	std::vector<Object*> objects[2];
 	static Central* inst;
 	Scene* scene;
@@ -22,8 +23,7 @@ public:
 	void release();
 	void allSubObject();
 	void addObject(Object* object);
-	template <class u>
-	u* findObject(std::string tag);
+	Object* findObject(std::string tag);
 	void subObject(Object* object);
 };
 

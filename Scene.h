@@ -42,11 +42,14 @@ protected:
 	 */
 	void fadeIn(Scene* next_scene);
 
-private:
 	/// centralクラスを保存しておく(いちいちゲットするコストは無駄と判断)
 	Central* central;
+
+private:
 	/// state情報
 	unsigned int phase;
+
 	/// fade
 	Fade* fade;
+
 };

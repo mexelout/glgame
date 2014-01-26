@@ -23,6 +23,10 @@ Input::~Input(void) {
 void Input::init() {
 	key_element.push_back(VK_SPACE);
 	key_element.push_back(VK_ESCAPE);
+	key_element.push_back('a');
+	key_element.push_back('s');
+	key_element.push_back('d');
+	key_element.push_back('w');
 	key_element.push_back(GLUT_KEY_LEFT);
 	key_element.push_back(GLUT_KEY_RIGHT);
 	key_element.push_back(GLUT_KEY_UP);

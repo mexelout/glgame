@@ -23,9 +23,9 @@ void Model::draw() {
 
 	int max_face = face_index.size();
 	int current = 0;
+	glEnable(GL_TEXTURE_2D);
 	for(int i = 0; i < max_face; i++) {
-		glEnable(GL_TEXTURE_2D);
-		images[material_index[i]]->setTexNum();
+		images[material_index[i]]->apply();
 		if(face_index[i] == 3) {
 			glBegin(GL_TRIANGLES);
 		} else {
@@ -52,7 +52,6 @@ void Model::release() {
  * xファイル読み込み
  */
 bool Model::load(const char* file_name) {
-	// とりあえず、100万文字分のバッファ
 	FILE* fp = null;
 	if(fp = fopen(file_name, "rt")) {
 		char key[255];
@@ -60,24 +59,24 @@ bool Model::load(const char* file_name) {
 		int depth = 0;
 
 		while(!feof(fp)) {
-			//キーワード 読み込み
+			// キーワード 読み込み
 			ZeroMemory(key,sizeof(key));
 			fscanf_s(fp,"%s ",key,sizeof(key));
-			//ヘッダー読み飛ばし
+			// ヘッダー読み飛ばし
 			if(strcmp(key,"Header")==0){
 				while(strcmp(key,"}")){
 					fscanf_s(fp,"%s ",key,sizeof(key));
 				}
 				continue;
 			}
-			//テンプレート読み飛ばし
+			// テンプレート読み飛ばし
 			if(strcmp(key,"template")==0){
 				while(strcmp(key,"}")){
 					fscanf_s(fp,"%s ",key,sizeof(key));
 				}
 				continue;
 			}
-			//頂点 読み込み
+			// 頂点 読み込み
 			if(strcmp(key,"Mesh")==0) {
 				fgets(buf,sizeof(buf),fp);
 				fgets(buf,sizeof(buf),fp);

@@ -11,7 +11,7 @@ typedef struct VECTOR2 {
 	VECTOR2& operator += (const VECTOR2& vec) {this->x+=vec.x;this->y+=vec.y;return *this;}
 	VECTOR2& operator -= (const VECTOR2& vec) {this->x-=vec.x;this->y-=vec.y;return *this;}
 	VECTOR2& operator *= (float val) {this->x*=val;this->y*=val;return *this;}
-	VECTOR2& operator /= (float val) {this->x/=val;this->y/=val;return *this;}
+	VECTOR2& operator /= (float val) {if(this->x)this->x/=val;if(this->y)this->y/=val;return *this;}
 
 	// binary operators
 	VECTOR2 operator + (const VECTOR2& vec) const {VECTOR2 work(this->x, this->y);work+=vec;return work;}
@@ -45,7 +45,7 @@ typedef struct VECTOR3 {
 	VECTOR3& operator += (const VECTOR3& vec) {this->x+=vec.x;this->y+=vec.y;this->z+=vec.z;return *this;}
 	VECTOR3& operator -= (const VECTOR3& vec) {this->x-=vec.x;this->y-=vec.y;this->z-=vec.z;return *this;}
 	VECTOR3& operator *= (float val) {this->x*=val;this->y*=val;this->z*=val;return *this;}
-	VECTOR3& operator /= (float val) {this->x/=val;this->y/=val;this->z/=val;return *this;}
+	VECTOR3& operator /= (float val) {if(this->x)this->x/=val;if(this->y)this->y/=val;if(this->z)this->z/=val;return *this;}
 
 	// binary operators
 	VECTOR3 operator + (const VECTOR3& vec) const {VECTOR3 work(this->x, this->y, this->z);work+=vec;return work;}
@@ -57,6 +57,10 @@ typedef struct VECTOR3 {
 	float Length();
 	void set(const VECTOR3& vec);
 	void set(float x, float y, float z);
+
+	static VECTOR3 Up();
+	static VECTOR3 Right();
+	static VECTOR3 Forward();
 
 	float x, y, z;// member number
 }VECTOR3, *LPVECTOR3;
@@ -101,7 +105,7 @@ typedef struct VECTOR4 {
 	VECTOR4& operator += (const VECTOR4& vec) {this->x+=vec.x;this->y+=vec.y;this->z+=vec.z;this->w+=vec.w;return *this;}
 	VECTOR4& operator -= (const VECTOR4& vec) {this->x-=vec.x;this->y-=vec.y;this->z-=vec.z;this->w-=vec.w;return *this;}
 	VECTOR4& operator *= (float val) {this->x*=val;this->y*=val;this->z*=val;this->w*=val;return *this;}
-	VECTOR4& operator /= (float val) {this->x/=val;this->y/=val;this->z/=val;this->w/=val;return *this;}
+	VECTOR4& operator /= (float val) {if(this->x)this->x/=val;if(this->y)this->y/=val;if(this->z)this->z/=val;if(this->w)this->w/=val;return *this;}
 
 	// binary operators
 	VECTOR4 operator + (const VECTOR4& vec) const {VECTOR4 work(this->x, this->y, this->z, this->w);work+=vec;return work;}

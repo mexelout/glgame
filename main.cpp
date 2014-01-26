@@ -10,18 +10,14 @@
 
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	Central::getInst()->draw();
-
 	glutSwapBuffers();
-
 	// 入力の更新は最後にする
 	Input::update();
 }
 
 void timer(int value) {
 	Central::getInst()->update();
-
 	glutPostRedisplay();
 	glutTimerFunc(16 , timer , value);
 }
@@ -29,8 +25,6 @@ void timer(int value) {
 void init() {
 	glClearColor(0.3f, 0.6f, 0.9f, 1.0);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_ALPHA_TEST);//アルファテスト開始
 	glEnable(GL_BLEND);

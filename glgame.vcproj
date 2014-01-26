@@ -175,11 +175,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Grid.cpp"
 				>
 			</File>
 			<File
+				RelativePath=".\Ground.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Model.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Player.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Rigidbody.cpp"
 				>
 			</File>
 			<Filter
@@ -194,11 +210,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Color.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Frame.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Image.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Object.cpp"
 					>
 				</File>
 				<File
@@ -289,11 +313,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Game.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Grid.h"
 				>
 			</File>
 			<File
+				RelativePath=".\Ground.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Model.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Player.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Rigidbody.h"
 				>
 			</File>
 			<Filter
@@ -305,6 +345,10 @@
 				</File>
 				<File
 					RelativePath=".\Central.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Color.h"
 					>
 				</File>
 				<File

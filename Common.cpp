@@ -115,3 +115,12 @@ bool boundBox(const VECTOR2& lt, const VECTOR2& rb, const VECTOR2& p) {
 	}
 	return false;
 }
+
+/**
+ * OpenGL系の関数を楽にするやつ(めんどくささ回避)
+ * @param callback 呼び出すOpenGL描画メソッド(3つ固定)
+ * @param v 出力するベクトル
+ */
+void dm(void (__stdcall *callback)(float, float, float), const VECTOR3& v) {
+	callback(v.x, v.y, v.z);
+}

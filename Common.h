@@ -13,6 +13,9 @@
 #define boolean unsigned char
 #define SAFE_METHOD(p, method) {if(p) p->method();}
 #define SAFE_RELEASE(p) if(p){p->release();p=null;}
+#define SAFE_DELETE(p) {if(p){delete p;p=NULL;}}
+#define SAFE_DELETE_UNINIT(p) {if(p){p->uninit();delete p;p=NULL;}}
+#define SAFE_DELETE_ARRAY(p) {if(p){delete[] p;p=NULL;}}
 
 /**
 * sprintfを使用した四捨五入関数
@@ -80,5 +83,12 @@ char* attachString(char* str1, char* str2);
  * @return true : in false : out
  */
 bool boundBox(const VECTOR2& lt, const VECTOR2& rb, const VECTOR2& p);
+
+/**
+ * OpenGL系の関数を楽にするやつ(めんどくささ回避)
+ * @param callback 呼び出すOpenGL描画メソッド(3つ固定)
+ * @param v 出力するベクトル
+ */
+void dm(void (__stdcall *callback)(float, float, float), const VECTOR3& v);
 
 #endif // _COMMON_H_

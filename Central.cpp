@@ -3,15 +3,14 @@
 #include "Config.h"
 #include "Camera.h"
 #include "Input.h"
-#include "Scene.h"
+#include "Game.h"
 #include "Font.h"
+#include "Central.h"
+#include "ModelEdit.h"
 
 #define _DEBUG_AT_DISP_ 0
 
 Central* Central::inst = null;
-
-// object.cpp‚ª–³‚¢ˆ×‚±‚±‚Å’è‹`
-bool Object::end = false;
 
 Central::Central(void) : Object("central") {
 	scene = null;
@@ -27,18 +26,27 @@ Central* Central::getInst() {
 
 Central* Central::init() {
 	Font::init();
-	scene = new Scene;
+	scene = new Game;
 
 	return this;
 }
 
 void Central::update() {
 
+	if(end) return;
 	if(scene) scene->method();
 
+	if(end) {
+		glutExit();
+		return;
+	}
 	for each (std::vector<Object*> vec_obj in objects) {
 		for each (Object* obj in vec_obj) {
 			obj->update();
+			if(end) {
+				glutExit();
+				return;
+			}
 		}
 	}
 	cleanString();
@@ -46,8 +54,10 @@ void Central::update() {
 
 void Central::draw() {
 
+	if(end) return;
+
 	Camera::Perspective pers;
-	Camera* camera = findObject<Camera>("camera");
+	Camera* camera = (Camera*)findObject("camera");
 	if(camera) {
 		const Camera::LockAtUp* lock_at_up = camera->getLockAtUp();
 
@@ -102,10 +112,6 @@ void Central::draw() {
 	if(scene) scene->draw();
 
 	glEnable(GL_DEPTH_TEST);
-
-	if(end) {
-		glutExit();
-	}
 }
 
 void Central::release() {
@@ -131,12 +137,11 @@ void Central::allSubObject() {
 	}
 }
 
-template <class u>
-u* Central::findObject(std::string tag) {
+Object* Central::findObject(std::string tag) {
 	for each (std::vector<Object*> vec_obj in objects) {
 		for each (Object* obj in vec_obj) {
 			if(obj->tagEqual(tag)) {
-				return (u*)obj;
+				return obj;
 			}
 		}
 	}
